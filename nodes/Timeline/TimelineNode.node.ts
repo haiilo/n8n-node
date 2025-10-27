@@ -9,7 +9,7 @@ import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 export class TimelineNode implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Create a timeline Post',
-		name: 'example',
+		name: 'timelineNode',
 		icon: { light: 'file:example.svg', dark: 'file:example.dark.svg' },
 		group: ['input'],
 		version: 1,
