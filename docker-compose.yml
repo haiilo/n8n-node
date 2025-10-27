@@ -1,6 +1,7 @@
 services:
   n8n:
     build: .
+    image: n8n-custom-haiilo:latest  # Add this line
     ports:
       - "5678:5678"
     environment:
