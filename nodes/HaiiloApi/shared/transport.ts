@@ -15,15 +15,17 @@ export async function haiiloApiRequest(
 	qs: IDataObject = {},
 	body: IDataObject | undefined = undefined,
 ) {
+
+
+	const credentialType = 'haiiloOAuth2Api';
+	const credentials = await this.getCredentials(credentialType);
+	const host = (credentials!.tenantUrl as string).replace(/\/$/, '');
 	const options: IHttpRequestOptions = {
 		method: method,
 		qs,
 		body,
-		url: `https://haiilo.com/api/${path}`,
+		url: `${host}/api${path}`,
 		json: true,
 	};
-
-	const credentialType = 'haiiloOAuth2Api';
-
 	return this.helpers.httpRequestWithAuthentication.call(this, credentialType, options);
 }
