@@ -5,6 +5,7 @@ import type {
 	INodeTypeDescription,
 } from 'n8n-workflow';
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
+import { getTimelines } from '../HaiiloApi/sender/getTimelines';
 
 export class Timeline implements INodeType {
 	description: INodeTypeDescription = {
@@ -32,6 +33,11 @@ export class Timeline implements INodeType {
 				description: 'The content of the timeline post to create',
 			},
 		],
+	};
+	methods = {
+		listSearch: {
+			getTimelines,
+		},
 	};
 
 	// The function below is responsible for actually doing whatever this node

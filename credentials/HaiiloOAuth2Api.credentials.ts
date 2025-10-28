@@ -21,7 +21,7 @@ export class HaiiloOAuth2Api implements ICredentialType {
 			displayName: 'Tenant URL',
 			name: 'tenantUrl',
 			type: 'string',
-			default: 'https://coyo2.eu.ngrok.io',
+			default: 'https://next.coyostaging.com',
 			required: true,
 			description: 'Your Haiilo tenant URL (without trailing slash)',
 		},
