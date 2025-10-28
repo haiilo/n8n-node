@@ -6,8 +6,8 @@ import {
 } from 'n8n-workflow';
 import { NodeConnectionTypes } from 'n8n-workflow';
 import { getSenders } from '../HaiiloApi/sender/getSenders';
-import { haiiloApiRequest } from '../HaiiloApi/shared/transport';
 import { getMe } from '../HaiiloApi/user/me';
+import { createTimelinePost } from '../HaiiloApi/timeline/create';
 
 export class Timeline implements INodeType {
 	description: INodeTypeDescription = {
@@ -56,24 +56,9 @@ export class Timeline implements INodeType {
 		const input = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 		for (let i = 0; i < input.length; i++) {
-
 			const timelineMessage = this.getNodeParameter('timelineMessage', i) as string;
-
 			const me = await getMe(this);
-
-			const post = {
-				recipientIds: [me.id],
-				restricted: false,
-				webPreviews: {},
-				stickyExpiry: null,
-				type: 'post',
-				authorId: me.id,
-				data: { message: timelineMessage },
-				attachments: [],
-				fileLibraryAttachments: [],
-			};
-			console.log(post);
-			const response = await haiiloApiRequest.call(this, 'POST', '/timeline-items', {},  post);
+			const response = await createTimelinePost(this, me.id, timelineMessage);
 			returnData.push({ json: response.content ?? [] });
 		}
 		return [returnData];
