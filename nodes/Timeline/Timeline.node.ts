@@ -1,11 +1,13 @@
-import type {
+import {
+	ApplicationError,
 	IExecuteFunctions,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
-import { getTimelines } from '../HaiiloApi/sender/getTimelines';
+import { getSenders } from '../HaiiloApi/sender/getSenders';
+import { haiiloApiRequest } from '../HaiiloApi/shared/transport';
 
 export class Timeline implements INodeType {
 	description: INodeTypeDescription = {
@@ -36,7 +38,7 @@ export class Timeline implements INodeType {
 	};
 	methods = {
 		listSearch: {
-			getTimelines,
+			getTimelines: getSenders,
 		},
 	};
 
@@ -48,17 +50,17 @@ export class Timeline implements INodeType {
 		const items = this.getInputData();
 
 		let item: INodeExecutionData;
-		let myString: string;
+		let timelineMessage: string;
 
 		// Iterates over all input items and add the key "myString" with the
 		// value the parameter "myString" resolves to.
 		// (This could be a different value for each item in case it contains an expression)
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			try {
-				myString = this.getNodeParameter('myString', itemIndex, '') as string;
+				timelineMessage = this.getNodeParameter('timelineMessage', itemIndex, '') as string;
 				item = items[itemIndex];
 
-				item.json.myString = myString;
+				sendRequestToCreateTimelinePost(timelineMessage);
 			} catch (error) {
 				// This node should never fail but we want to showcase how
 				// to handle errors.
@@ -81,4 +83,21 @@ export class Timeline implements INodeType {
 
 		return [items];
 	}
+}
+
+function sendRequestToCreateTimelinePost(timelineMessage: string) {
+	let post = {
+		recipientIds: ['10a9e5b4-f3b3-4a42-b244-498080480d70'],
+		restricted: false,
+		webPreviews: {},
+		stickyExpiry: null,
+		type: 'post',
+		authorId: '10a9e5b4-f3b3-4a42-b244-498080480d70',
+		data: { message: timelineMessage },
+		attachments: [],
+		fileLibraryAttachments: [],
+	};
+	haiiloApiRequest.call(this, 'POST',  '/timeline-items', post).catch((error) => {
+		throw new ApplicationError(`Haiilo Timeline Post creation failed: ${error.message}`);
+	});
 }

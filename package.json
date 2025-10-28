@@ -34,7 +34,7 @@
             "dist/credentials/HaiiloOAuth2Api.credentials.js"
         ],
         "nodes": [
-            "dist/nodes/User/FindUser.node.js"
+            "dist/nodes/Timeline/Timeline.node.js"
         ]
     },
     "devDependencies": {

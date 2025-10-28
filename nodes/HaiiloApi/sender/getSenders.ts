@@ -15,7 +15,7 @@ type TimelineResponse = {
 	items: TimelineItem[];
 };
 
-export async function getTimelines(
+export async function getSenders(
 	this: ILoadOptionsFunctions,
 	filter?: string,
 	paginationToken?: string,
