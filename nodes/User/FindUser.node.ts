@@ -40,13 +40,20 @@ export class FindUser implements INodeType {
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-		const searchTerm = this.getNodeParameter('userName', 0) as string;
-		const response = await haiiloApiRequest.call(this, 'GET', '/users', {
-			q: `displayName=${searchTerm}&status=ACTIVE&with=adminFields`,
-			page: 0,
-			per_page: 10,
-		});
-		return [response.content];
+
+		const input = this.getInputData();
+		const returnData: INodeExecutionData[] = [];
+		for (let i = 0; i < input.length; i++) {
+			const searchTerm = this.getNodeParameter('userName', 0) as string;
+			const response = await haiiloApiRequest.call(this, 'GET', '/users', {
+				q: `displayName=${searchTerm}&status=ACTIVE&with=adminFields`,
+				page: 0,
+				per_page: 10,
+			});
+
+			returnData.push({ json: response.content[0] });
+		}
+		return [returnData];
 
 		// const items = this.getInputData();
 		//
