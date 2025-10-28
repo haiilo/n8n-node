@@ -6,10 +6,10 @@ import type {
 } from 'n8n-workflow';
 import { NodeConnectionTypes } from 'n8n-workflow';
 import { haiiloApiRequest } from '../HaiiloApi/shared/transport';
-import { uuid } from 'zod/v4';
 import { getAllMessageChannels } from '../HaiiloApi/chat/getAllChannels';
 import { createChannel } from '../HaiiloApi/chat/createChannel';
 import { getMe } from '../HaiiloApi/user/me';
+import { uuid } from '../HaiiloApi/uuid';
 
 export class SendChatMessage implements INodeType {
 	description: INodeTypeDescription = {
@@ -70,7 +70,7 @@ export class SendChatMessage implements INodeType {
 			const data = {
 				attachments: [],
 				fileLibraryAttachments: [],
-				clientMessageId: uuid().toString(),
+				clientMessageId: uuid(),
 				data: {
 					message,
 				}
