@@ -34,7 +34,9 @@
             "dist/credentials/HaiiloOAuth2Api.credentials.js"
         ],
         "nodes": [
-            "dist/nodes/Timeline/Timeline.node.js"
+            "dist/nodes/Timeline/Timeline.node.js",
+            "dist/nodes/User/FindUser.node.js",
+            "dist/nodes/Chat/SendChatMessage.node.js"
         ]
     },
     "devDependencies": {

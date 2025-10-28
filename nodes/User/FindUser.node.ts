@@ -16,7 +16,7 @@ export class FindUser implements INodeType {
 		version: 1,
 		description: 'Finds a user in Haiilo',
 		defaults: {
-			name: 'Example',
+			name: 'Find User',
 		},
 		inputs: [NodeConnectionTypes.Main],
 		outputs: [NodeConnectionTypes.Main],
@@ -36,6 +36,22 @@ export class FindUser implements INodeType {
 				placeholder: '',
 				description: 'The user name to search for',
 			},
+			{
+				displayName: 'Page',
+				name: 'page',
+				type: 'number',
+				default: 0,
+				placeholder: '0',
+				description: 'The page number to retrieve',
+			},
+			{
+				displayName: 'Items Per Page',
+				name: 'itemsPerPage',
+				type: 'number',
+				default: 10,
+				placeholder: '10',
+				description: 'The number of items to retrieve per page',
+			},
 		],
 	};
 
@@ -44,11 +60,11 @@ export class FindUser implements INodeType {
 		const input = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 		for (let i = 0; i < input.length; i++) {
-			const searchTerm = this.getNodeParameter('userName', 0) as string;
-			const response = await haiiloApiRequest.call(this, 'GET', `/users?displayName=${searchTerm}&status=ACTIVE&with=adminFields`, {
-				q: ``,
-				page: 0,
-				per_page: 10,
+			const searchTerm = this.getNodeParameter('userName', i) as string;
+			const path = `/users?displayName=${searchTerm}&status=ACTIVE&with=adminFields`;
+			const response = await haiiloApiRequest.call(this, 'GET', path, {
+				page: this.getNodeParameter('page', i) as number,
+				per_page: this.getNodeParameter('itemsPerPage', 0) as number,
 			});
 
 			returnData.push({ json: response.content ?? [] });
