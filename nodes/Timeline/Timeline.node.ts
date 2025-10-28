@@ -23,6 +23,12 @@ export class Timeline implements INodeType {
 		inputs: [NodeConnectionTypes.Main],
 		outputs: [NodeConnectionTypes.Main],
 		usableAsTool: true,
+		credentials: [
+			{
+				name: 'haiiloOAuth2Api',
+				required: true,
+			},
+		],
 		properties: [
 			// Node properties which the user gets displayed and
 			// can change on the node.
@@ -49,7 +55,6 @@ export class Timeline implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 
-		let item: INodeExecutionData;
 		let timelineMessage: string;
 
 		// Iterates over all input items and add the key "myString" with the
@@ -58,9 +63,22 @@ export class Timeline implements INodeType {
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			try {
 				timelineMessage = this.getNodeParameter('timelineMessage', itemIndex, '') as string;
-				item = items[itemIndex];
 
-				sendRequestToCreateTimelinePost(timelineMessage);
+				const post = {
+					recipientIds: ['10a9e5b4-f3b3-4a42-b244-498080480d70'],
+					restricted: false,
+					webPreviews: {},
+					stickyExpiry: null,
+					type: 'post',
+					authorId: '10a9e5b4-f3b3-4a42-b244-498080480d70',
+					data: { message: timelineMessage },
+					attachments: [],
+					fileLibraryAttachments: [],
+				};
+				console.log(post);
+				haiiloApiRequest.call(this, 'POST',  'timeline-items', post).catch((error) => {
+					throw new ApplicationError(`Haiilo Timeline Post creation failed: ${error.message}`);
+				});
 			} catch (error) {
 				// This node should never fail but we want to showcase how
 				// to handle errors.
@@ -83,21 +101,4 @@ export class Timeline implements INodeType {
 
 		return [items];
 	}
-}
-
-function sendRequestToCreateTimelinePost(timelineMessage: string) {
-	let post = {
-		recipientIds: ['10a9e5b4-f3b3-4a42-b244-498080480d70'],
-		restricted: false,
-		webPreviews: {},
-		stickyExpiry: null,
-		type: 'post',
-		authorId: '10a9e5b4-f3b3-4a42-b244-498080480d70',
-		data: { message: timelineMessage },
-		attachments: [],
-		fileLibraryAttachments: [],
-	};
-	haiiloApiRequest.call(this, 'POST',  '/timeline-items', post).catch((error) => {
-		throw new ApplicationError(`Haiilo Timeline Post creation failed: ${error.message}`);
-	});
 }

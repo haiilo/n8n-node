@@ -33,7 +33,7 @@ export async function getSenders(
 		],
 	};
 
-	responseData = await haiiloApiRequest.call(this, 'GET', '/senders/timeline', {
+	responseData = await haiiloApiRequest.call(this, 'GET', 'senders/timeline', {
 		q: '',
 		page,
 		per_page,
