@@ -15,5 +15,5 @@ export async function createTimelinePost(self: IExecuteFunctions, recipientId: s
 	};
 	console.log(post);
 	const response = await haiiloApiRequest.call(self, 'POST', '/timeline-items', {},  post);
-	return response.content;
+	return response;
 }
