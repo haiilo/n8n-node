@@ -82,7 +82,7 @@ export class HaiiloOAuth2Api implements ICredentialType {
 			},
 			body: `grant_type=password&username=${encodeURIComponent(credentials.username as string)}&password=${encodeURIComponent(credentials.password as string)}`,
 		});
-		console.log(response);
+		console.log(JSON.stringify(response, null, 2));
 		return { access_token: response.access_token };
 	}
 

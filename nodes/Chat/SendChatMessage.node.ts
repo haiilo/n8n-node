@@ -6,7 +6,7 @@ import type {
 } from 'n8n-workflow';
 import { NodeConnectionTypes } from 'n8n-workflow';
 import { haiiloApiRequest } from '../HaiiloApi/shared/transport';
-import { getAllMessageChannels } from '../HaiiloApi/chat/getAllChannels';
+import { findMessageChannel } from '../HaiiloApi/chat/findMessageChannel';
 import { createChannel } from '../HaiiloApi/chat/createChannel';
 import { getMe } from '../HaiiloApi/user/me';
 import { uuid } from '../HaiiloApi/uuid';
@@ -58,15 +58,16 @@ export class SendChatMessage implements INodeType {
 		for (let i = 0; i < input.length; i++) {
 			const userId = this.getNodeParameter('userId', i) as string;
 			const message = this.getNodeParameter('message', i) as string;
-
-			const channels = await getAllMessageChannels(this, userId);
-			if (channels.length < 1) {
-				const me = await getMe(this);
-				const newChannel = await createChannel(this, me.id, userId);
-				channels.push(newChannel);
+			const me = await getMe(this);
+			let channelId = await findMessageChannel(this, me.id, userId);
+			console.log("Channel id", channelId);
+			if (!channelId) {
+				const newChannel = await createChannel(this, userId);
+				channelId = newChannel.id;
+				console.log("Channel id", channelId);
 			}
 
-			const path = `/message-channels/${channels[0].id}/messages`;
+			const path = `/message-channels/${channelId}/messages`;
 			const data = {
 				attachments: [],
 				fileLibraryAttachments: [],

@@ -63,8 +63,8 @@ export class FindUser implements INodeType {
 			const searchTerm = this.getNodeParameter('userName', i) as string;
 			const path = `/users?displayName=${searchTerm}&status=ACTIVE&with=adminFields`;
 			const response = await haiiloApiRequest.call(this, 'GET', path, {
-				page: this.getNodeParameter('page', i) as number,
-				per_page: this.getNodeParameter('itemsPerPage', 0) as number,
+				_page: this.getNodeParameter('page', i) as number,
+				_pageSize: this.getNodeParameter('itemsPerPage', 0) as number,
 			});
 
 			returnData.push({ json: response.content ?? [] });
