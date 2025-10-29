@@ -1,4 +1,4 @@
-import type { IExecuteFunctions } from 'n8n-workflow';
+import { IExecuteFunctions } from 'n8n-workflow';
 import { haiiloApiRequest } from '../shared/transport';
 
 export async function getMe(self: IExecuteFunctions)  {

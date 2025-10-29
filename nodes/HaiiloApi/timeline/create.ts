@@ -1,5 +1,5 @@
 import { haiiloApiRequest } from '../shared/transport';
-import type { IExecuteFunctions } from 'n8n-workflow';
+import { IExecuteFunctions } from 'n8n-workflow';
 
 export async function createTimelinePost(self: IExecuteFunctions, recipientId: string, timelineMessage: string) {
 	const post = {

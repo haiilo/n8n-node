@@ -14,7 +14,7 @@ export class Timeline implements INodeType {
 		displayName: 'Haiilo Timeline Post',
 		name: 'timeline',
 		icon: { light: 'file:../../icons/haiilo.svg', dark: 'file:../../icons/haiilo.dark.svg' },
-		group: ['input'],
+		group: ['transform'],
 		version: 1,
 		description: 'Haiilo Timeline Post',
 		defaults: {
