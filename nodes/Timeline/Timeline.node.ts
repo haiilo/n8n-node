@@ -11,14 +11,14 @@ import { createTimelinePost } from '../HaiiloApi/timeline/create';
 
 export class Timeline implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Create a timeline Post',
+		displayName: 'Haiilo Timeline Post',
 		name: 'timeline',
 		icon: { light: 'file:../../icons/haiilo.svg', dark: 'file:../../icons/haiilo.dark.svg' },
 		group: ['input'],
 		version: 1,
-		description: 'Create Timeline Post Node',
+		description: 'Haiilo Timeline Post',
 		defaults: {
-			name: 'Timeline',
+			name: 'Haiilo Timeline Post',
 		},
 		inputs: [NodeConnectionTypes.Main],
 		outputs: [NodeConnectionTypes.Main],

@@ -13,14 +13,14 @@ import { uuid } from '../HaiiloApi/uuid';
 
 export class SendChatMessage implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Send Chat Message',
+		displayName: 'Haiilo Chat Message',
 		name: 'sendChatMessage',
 		icon: { light: 'file:../../icons/haiilo.svg', dark: 'file:../../icons/haiilo.dark.svg' },
 		group: ['input'],
 		version: 1,
 		description: 'Sends a chat message in Haiilo',
 		defaults: {
-			name: 'Send Chat Message',
+			name: 'Haiilo Send Chat Message',
 		},
 		inputs: [NodeConnectionTypes.Main],
 		outputs: [NodeConnectionTypes.Main],

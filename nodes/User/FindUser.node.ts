@@ -9,14 +9,14 @@ import { haiiloApiRequest } from '../HaiiloApi/shared/transport';
 
 export class FindUser implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Find User',
+		displayName: 'Haiilo Find User',
 		name: 'findUser',
 		icon: { light: 'file:../../icons/haiilo.svg', dark: 'file:../../icons/haiilo.dark.svg' },
 		group: ['input'],
 		version: 1,
 		description: 'Finds a user in Haiilo',
 		defaults: {
-			name: 'Find User',
+			name: 'Haiilo Find User',
 		},
 		inputs: [NodeConnectionTypes.Main],
 		outputs: [NodeConnectionTypes.Main],
