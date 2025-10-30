@@ -1,5 +1,5 @@
 import { IDataObject, IExecuteFunctions } from 'n8n-workflow';
-import { getMe } from '../HaiiloApi/user/me';
+import { getMe } from './resources/user/me';
 import { createTimelinePost } from '../HaiiloApi/timeline/create';
 
 export async function timelinePostAction(self: IExecuteFunctions) {
