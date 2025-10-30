@@ -131,7 +131,7 @@ export class Haiilo implements INodeType {
 			},
 			{
 				displayName: 'Timeline Message',
-				name: 'timeline',
+				name: 'timelineMessage',
 				type: 'string',
 				typeOptions: {
 				},
