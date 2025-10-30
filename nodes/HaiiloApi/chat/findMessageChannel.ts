@@ -1,6 +1,6 @@
 import type { IExecuteFunctions } from 'n8n-workflow';
-import { Entity } from '../../../HaiiloApi/shared/pagedResult';
-import { findInPages } from '../../../HaiiloApi/shared/findInPages';
+import { Entity } from '../shared/pagedResult';
+import { findInPages } from '../shared/findInPages';
 type Member = { user?: Entity };
 type Channel = { type: string, members: Member[] } & Entity;
 

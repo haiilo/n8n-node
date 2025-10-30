@@ -1,6 +1,6 @@
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
-import { findMessageChannel } from './findMessageChannel';
-import { createChannel } from './createChannel';
+import { findMessageChannel } from '../../../HaiiloApi/chat/findMessageChannel';
+import { createChannel } from '../../../HaiiloApi/chat/createChannel';
 import { uuid } from '../../../HaiiloApi/uuid';
 import { haiiloApiRequest } from '../../../HaiiloApi/shared/transport';
 import { Entity } from '../../../HaiiloApi/shared/pagedResult';
