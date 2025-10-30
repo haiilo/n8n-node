@@ -58,6 +58,10 @@ export class Haiilo implements INodeType {
 					{
 						name: 'User',
 						value: 'user',
+					},
+					{
+						name: 'Notification',
+						value: 'notification',
 					}
 				],
 				default: 'timeline',
@@ -129,6 +133,28 @@ export class Haiilo implements INodeType {
 				default: 'findUser',
 			},
 			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: [
+							'notification',
+						],
+					},
+				},
+				options: [
+					{
+						name: 'Send Notification',
+						value: 'sendNotification',
+						description: 'Send a notification to a user',
+						action: 'Send a notification to a user',
+					},
+				],
+				default: 'sendNotification',
+			},
+			{
 				displayName: 'Timeline Message',
 				name: 'timelineMessage',
 				type: 'string',
@@ -179,9 +205,30 @@ export class Haiilo implements INodeType {
 					show: {
 						resource: [
 							'chat',
+							'notification',
 						],
 						operation: [
-							'sendChatMessage'
+							'sendChatMessage',
+							'sendNotification'
+						],
+					},
+				}
+			},
+			{
+				displayName: 'Title',
+				name: 'title',
+				type: 'string',
+				default: '',
+				placeholder: '',
+				description: 'The message title',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: [
+							'notification',
+						],
+						operation: [
+							'sendNotification',
 						],
 					},
 				}
@@ -198,9 +245,49 @@ export class Haiilo implements INodeType {
 					show: {
 						resource: [
 							'chat',
+							'notification',
 						],
 						operation: [
-							'sendChatMessage'
+							'sendChatMessage',
+							'sendNotification',
+						],
+					},
+				}
+			},
+			{
+				displayName: 'Link (URL)',
+				name: 'linkUrl',
+				type: 'string',
+				default: '',
+				placeholder: '',
+				description: 'A link target',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: [
+							'notification',
+						],
+						operation: [
+							'sendNotification',
+						],
+					},
+				}
+			},
+			{
+				displayName: 'Target Channel',
+				name: 'notificationChannel',
+				type: 'multiOptions',
+				default: ['WEB'],
+				placeholder: '',
+				description: 'The distribution channel for the notification',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: [
+							'notification',
+						],
+						operation: [
+							'sendNotification',
 						],
 					},
 				}
@@ -258,6 +345,12 @@ export class Haiilo implements INodeType {
 						case 'chat':
 							if (operation in resources.chat) {
 								const results = await resources.chat[operation].call(this, i);
+								returnData.push(...results);
+							}
+							break;
+						case 'notification':
+							if (operation in resources.notification) {
+								const results = await resources.notification[operation].call(this, i);
 								returnData.push(...results);
 							}
 							break;
