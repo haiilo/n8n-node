@@ -7,7 +7,6 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 
-// Extended interface to support additional n8n tool properties
 interface IExtendedNodeTypeDescription extends INodeTypeDescription {
 	codex?: {
 		categories: string[];
@@ -208,7 +207,7 @@ export class Haiilo implements INodeType {
 			}
 		],
 	};
-	// Methods to load options
+
 	methods = {
 		loadOptions: {
 
@@ -251,23 +250,19 @@ export class Haiilo implements INodeType {
 				try {
 					switch (resource) {
 						case 'timeline':
-							// Using modularized resources
 							if (operation in resources.timeline) {
-								// Execute the corresponding operation
 								const results = await resources.timeline[operation].call(this, i);
 								returnData.push(...results);
 							}
 							break;
 						case 'chat':
 							if (operation in resources.chat) {
-								// Execute the corresponding operation
 								const results = await resources.chat[operation].call(this, i);
 								returnData.push(...results);
 							}
 							break;
 						case 'user':
 							if (operation in resources.user) {
-								// Execute the corresponding operation
 								const results = await resources.user[operation].call(this, i);
 								returnData.push(...results);
 							}
@@ -298,5 +293,4 @@ export class Haiilo implements INodeType {
 	}
 }
 
-// Export default para compatibilidade n8n
 export default Haiilo;
