@@ -7,10 +7,10 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 import { HaiiloNodeRepository } from '../HaiiloApi/HaiiloNodeRepository';
-import { Notifications } from './resources/notifications';
-import { Chat } from './resources/chat';
-import { Timeline } from './resources/timeline';
-import { User } from './resources/user';
+import { Notification } from './resources/notification/notification';
+import { Chat } from './resources/chat/chat';
+import { Timeline } from './resources/timeline/timeline';
+import { User } from './resources/user/user';
 
 interface IExtendedNodeTypeDescription extends INodeTypeDescription {
 	codex?: {
@@ -25,7 +25,7 @@ interface IExtendedNodeTypeDescription extends INodeTypeDescription {
 export class Haiilo implements INodeType {
 	repo = new HaiiloNodeRepository(
 		new Chat(),
-		new Notifications(),
+		new Notification(),
 		new Timeline(),
 		new User()
 	);

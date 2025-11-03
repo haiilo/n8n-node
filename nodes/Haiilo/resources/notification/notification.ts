@@ -2,7 +2,7 @@
 import { HaiiloCategory, HaiiloFunction } from '../../../HaiiloApi/HaiiloNodeRepository';
 import { SendNotification } from './sendNotification';
 
-export class Notifications extends HaiiloCategory {
+export class Notification extends HaiiloCategory {
 	private functions = [new SendNotification()];
 	getName(): string {
 		return 'notification';
