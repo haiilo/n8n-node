@@ -26,6 +26,9 @@ export class HaiiloNodeRepository {
 	getCategories(): HaiiloCategory[] {
 		return Object.values(this._categories);
 	}
+	getCategoryNames(): string[] {
+		return Object.keys(this._categories);
+	}
 	getAllOperations(): INodeProperties[] {
 		let operations: INodeProperties[] = [];
 		this.getCategories().forEach((category) => {

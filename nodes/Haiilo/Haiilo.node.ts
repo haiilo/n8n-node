@@ -71,13 +71,13 @@ export class Haiilo implements INodeType {
 
 	// Adds the usableAsTool property dynamically
 	constructor() {
+		const repo = HaiiloNodeRepository.instance;
 		this.description.usableAsTool = true;
-
 		this.description.displayName = 'Haiilo';
 		this.description.codex = {
 			categories: ['Haiilo'],
 			subcategories: {
-				'Haiilo': ['Timeline', 'Chat', 'User']
+				'Haiilo': repo.getCategoryNames()
 			},
 			// Simplified name for AI usage (string array)
 			alias: ['haiilo']
