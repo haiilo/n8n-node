@@ -1,9 +1,9 @@
 
 import { HaiiloCategory, HaiiloFunction } from '../../../HaiiloApi/HaiiloNodeRepository';
-import { SendChatMessage } from '../chat/sendChatMessage';
+import { SendNotification } from './sendNotification';
 
 export class Notifications extends HaiiloCategory {
-	private functions = [new SendChatMessage()];
+	private functions = [new SendNotification()];
 	getName(): string {
 		return 'notification';
 	}
