@@ -83,7 +83,7 @@ export abstract class HaiiloCategory {
 					name: func.getDisplayName(),
 					value: func.getName(),
 					description: func.getDescription(),
-					action: func.getDescription(),
+					action: func.getDisplayName(),
 				},
 			],
 		}));

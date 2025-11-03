@@ -44,7 +44,7 @@ export class SendChatMessage extends HaiiloFunction {
 		return 'Send Chat Message';
 	}
 	getDescription(): string {
-		return 'Sends a chat message to a user';
+		return 'Send a chat message to a user';
 	}
 	getParameters(): HaiiloParameter[] {
 		return [

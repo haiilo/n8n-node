@@ -50,7 +50,7 @@ export class SendNotification extends HaiiloFunction {
 		return 'Send Notification';
 	}
 	getDescription(): string {
-		return 'Sends a notification to a user';
+		return 'Send a notification to a user';
 	}
 	getParameters(): HaiiloParameter[] {
 		return [

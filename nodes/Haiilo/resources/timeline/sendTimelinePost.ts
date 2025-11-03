@@ -30,7 +30,7 @@ export class SendTimelinePost extends HaiiloFunction {
 		return 'Send Timeline Post';
 	}
 	getDescription(): string {
-		return 'Sends a timeline post to a user';
+		return 'Send a timeline post to a user';
 	}
 	getParameters(): HaiiloParameter[] {
 		return [

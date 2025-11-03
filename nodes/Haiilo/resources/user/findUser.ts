@@ -25,7 +25,7 @@ export class FindUser extends HaiiloFunction {
 		return 'Find User';
 	}
 	getDescription(): string {
-		return 'Finds a user by their display name';
+		return 'Find a user by their display name';
 	}
 	getParameters(): HaiiloParameter[] {
 		return [{
