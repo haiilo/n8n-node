@@ -7,10 +7,7 @@ import { HaiiloFunction, HaiiloParameter, NodeFunction } from '../../../HaiiloAp
 /**
  * Executes the sendTimelinePost operation and retrieve the result
  */
-async function sendTimelinePost(
-	this: IExecuteFunctions,
-	i: number,
-): Promise<INodeExecutionData[]> {
+async function sendTimelinePost(this: IExecuteFunctions, i: number): Promise<INodeExecutionData[]> {
 	const returnData: INodeExecutionData[] = [];
 
 	const message = this.getNodeParameter('timelineMessage', i) as string;
@@ -36,16 +33,18 @@ export class SendTimelinePost extends HaiiloFunction {
 		return 'Sends a timeline post to a user';
 	}
 	getParameters(): HaiiloParameter[] {
-		return [{
-			displayName: 'Timeline Message',
-			name: 'timelineMessage',
-			type: 'string',
-			typeOptions: {
+		return [
+			{
+				displayName: 'Timeline Message',
+				name: 'timelineMessage',
+				type: 'string',
+				typeOptions: {},
+				required: true,
+				default: '',
+				placeholder: '',
+				description:
+					'Select the workspaces to get information. Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 			},
-			required: true,
-			default: '',
-			placeholder: '',
-			description: 'Select the workspaces to get information. Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
-		}];
+		];
 	}
 }
