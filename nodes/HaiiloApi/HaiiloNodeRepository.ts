@@ -46,7 +46,7 @@ export class HaiiloNodeRepository {
 	private registerNodeFunction(category: string, name: string, func: NodeFunction): void {
 		this._nodes[category][name] = func;
 	}
-	registerNodeCategory(category: HaiiloCategory): void {
+	private registerNodeCategory(category: HaiiloCategory): void {
 		this._categories[category.getName()] = category;
 		this._nodes[category.getName()] = {};
 		category.getFunctions().forEach((func) => {
