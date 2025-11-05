@@ -1,19 +1,22 @@
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
-import { haiiloApiRequest } from '../../../HaiiloApi/shared/transport';
-import { Entity } from '../../../HaiiloApi/shared/pagedResult';
-import { getMe } from '../../../HaiiloApi/user/me';
+import { haiiloApiRequest } from '../../../../HaiiloApi/shared/transport';
+import { Entity } from '../../../../HaiiloApi/shared/pagedResult';
+import { getMe } from '../../../../HaiiloApi/user/me';
 import {
 	HaiiloFunction,
 	HaiiloParameter,
-	NodeFunction,
-} from '../../../HaiiloApi/HaiiloNodeRepository';
+	TransformFunction,
+} from '../../../../HaiiloApi/HaiiloNodeRepository';
 
-async function sendNotification(this: IExecuteFunctions, i: number): Promise<INodeExecutionData[]> {
+async function sendNotification(this: IExecuteFunctions, i: number): Promise<INodeExecutionData[] | null> {
 	const receiver = this.getNodeParameter('receiver', i) as Entity;
 	const title = this.getNodeParameter('title', i) as string;
 	const message = this.getNodeParameter('message', i) as string;
 	const channel = (this.getNodeParameter('notificationChannel', i) as string) ?? 'WEB';
 	const link = this.getNodeParameter('linkUrl', i) as string;
+	if(!receiver?.id || !title || !message || !link || !channel) {
+		return null;
+	}
 	const me = await getMe(this);
 	const tenantId = me.tenantId;
 
@@ -40,7 +43,7 @@ async function sendNotification(this: IExecuteFunctions, i: number): Promise<INo
 }
 
 export class SendNotification extends HaiiloFunction {
-	getFunction(): NodeFunction {
+	getFunction(): TransformFunction {
 		return sendNotification;
 	}
 	getName(): string {

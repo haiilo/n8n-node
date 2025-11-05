@@ -1,5 +1,5 @@
 
-import { HaiiloCategory, HaiiloFunction } from '../../../HaiiloApi/HaiiloNodeRepository';
+import { HaiiloCategory, HaiiloFunction } from '../../../../HaiiloApi/HaiiloNodeRepository';
 import { SendNotification } from './sendNotification';
 
 export class Notification extends HaiiloCategory {

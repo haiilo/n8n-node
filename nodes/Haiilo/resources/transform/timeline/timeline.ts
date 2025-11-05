@@ -1,5 +1,5 @@
 
-import { HaiiloCategory, HaiiloFunction } from '../../../HaiiloApi/HaiiloNodeRepository';
+import { HaiiloCategory, HaiiloFunction } from '../../../../HaiiloApi/HaiiloNodeRepository';
 import { SendTimelinePost } from './sendTimelinePost';
 
 export class Timeline extends HaiiloCategory {

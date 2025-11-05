@@ -1,5 +1,8 @@
 import { SendChatMessage } from './sendChatMessage';
-import { HaiiloCategory, HaiiloFunction } from '../../../HaiiloApi/HaiiloNodeRepository';
+import {
+	HaiiloCategory,
+	HaiiloFunction,
+} from '../../../../HaiiloApi/HaiiloNodeRepository';
 
 
 export class Chat extends HaiiloCategory {

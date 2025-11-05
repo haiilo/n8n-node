@@ -1,7 +1,10 @@
-import { haiiloApiRequest } from '../shared/transport';
-import { IExecuteFunctions } from 'n8n-workflow';
+import { CallContext, haiiloApiRequest } from '../shared/transport';
 
-export async function createTimelinePost(self: IExecuteFunctions, recipientId: string, timelineMessage: string) {
+export async function createTimelinePost(
+	self: CallContext,
+	recipientId: string,
+	timelineMessage: string,
+) {
 	const post = {
 		recipientIds: [recipientId],
 		restricted: false,
@@ -14,6 +17,6 @@ export async function createTimelinePost(self: IExecuteFunctions, recipientId: s
 		fileLibraryAttachments: [],
 	};
 	console.log(post);
-	const response = await haiiloApiRequest.call(self, 'POST', '/timeline-items', {},  post);
+	const response = await haiiloApiRequest.call(self, 'POST', '/timeline-items', {}, post);
 	return response;
 }

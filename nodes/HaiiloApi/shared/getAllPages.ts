@@ -1,22 +1,21 @@
-import type { IDataObject, IHttpRequestMethods } from 'n8n-workflow';
+import type { IDataObject } from 'n8n-workflow';
 import { CallContext, haiiloApiRequest } from './transport';
 import { Entity, PagedResult } from './pagedResult';
 
-export async function findInPages<T extends Entity>(
+export async function getAllPages<T extends Entity>(
 	self: CallContext,
-	method: IHttpRequestMethods,
 	path: string,
-	findFunc: (page: PagedResult<T>) => Promise<T | null>,
 	query?: IDataObject,
 	body?: IDataObject,
 	maxPages = 100,
-) {
+): Promise<T[]> {
 	let page = 0;
 	let done = false;
+	const result = new Array<T>();
 	do {
 		const response: PagedResult<T> = await haiiloApiRequest.call(
 			self,
-			method,
+			'GET',
 			path,
 			{
 				...query,
@@ -26,12 +25,9 @@ export async function findInPages<T extends Entity>(
 			},
 			body,
 		);
-		const item = await findFunc(response);
-		if (item) {
-			return item;
-		}
+		result.push(...response.content);
 		done = response.last;
 		page++;
 	} while (!done && page < maxPages);
-	return null;
+	return result;
 }

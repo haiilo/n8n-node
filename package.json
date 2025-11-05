@@ -34,7 +34,8 @@
       "dist/credentials/HaiiloOAuth2Api.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/Haiilo/Haiilo.node.js"
+      "dist/nodes/Haiilo/Haiilo.node.js",
+      "dist/nodes/Haiilo/HaiiloTriggers.node.js"
     ]
   },
   "devDependencies": {

@@ -1,18 +1,21 @@
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
-import { findMessageChannel } from '../../../HaiiloApi/chat/findMessageChannel';
-import { createChannel } from '../../../HaiiloApi/chat/createChannel';
-import { uuid } from '../../../HaiiloApi/uuid';
-import { haiiloApiRequest } from '../../../HaiiloApi/shared/transport';
-import { Entity } from '../../../HaiiloApi/shared/pagedResult';
+import { findMessageChannel } from '../../../../HaiiloApi/chat/findMessageChannel';
+import { createChannel } from '../../../../HaiiloApi/chat/createChannel';
+import { uuid } from '../../../../HaiiloApi/uuid';
+import { haiiloApiRequest } from '../../../../HaiiloApi/shared/transport';
+import { Entity } from '../../../../HaiiloApi/shared/pagedResult';
 import {
 	HaiiloFunction,
 	HaiiloParameter,
-	NodeFunction,
-} from '../../../HaiiloApi/HaiiloNodeRepository';
+	TransformFunction,
+} from '../../../../HaiiloApi/HaiiloNodeRepository';
 
-async function sendChatMessage(this: IExecuteFunctions, i: number): Promise<INodeExecutionData[]> {
+async function sendChatMessage(this: IExecuteFunctions, i: number): Promise<INodeExecutionData[] | null> {
 	const receiver = this.getNodeParameter('receiver', i) as Entity;
 	const message = this.getNodeParameter('message', i) as string;
+	if(!receiver?.id || !message) {
+		return null;
+	}
 	let channel = await findMessageChannel(this, receiver);
 	console.log("Channel", channel);
 	if (!channel) {
@@ -34,7 +37,7 @@ async function sendChatMessage(this: IExecuteFunctions, i: number): Promise<INod
 }
 
 export class SendChatMessage extends HaiiloFunction {
-	getFunction(): NodeFunction {
+	getFunction(): TransformFunction {
 		return sendChatMessage;
 	}
 	getName(): string {

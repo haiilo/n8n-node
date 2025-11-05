@@ -1,16 +1,19 @@
 import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 
-import { createTimelinePost } from '../../../HaiiloApi/timeline/create';
-import { getMe } from '../../../HaiiloApi/user/me';
-import { HaiiloFunction, HaiiloParameter, NodeFunction } from '../../../HaiiloApi/HaiiloNodeRepository';
+import { createTimelinePost } from '../../../../HaiiloApi/timeline/create';
+import { getMe } from '../../../../HaiiloApi/user/me';
+import { HaiiloFunction, HaiiloParameter, TransformFunction } from '../../../../HaiiloApi/HaiiloNodeRepository';
 
 /**
  * Executes the sendTimelinePost operation and retrieve the result
  */
-async function sendTimelinePost(this: IExecuteFunctions, i: number): Promise<INodeExecutionData[]> {
+async function sendTimelinePost(this: IExecuteFunctions, i: number): Promise<INodeExecutionData[] | null> {
 	const returnData: INodeExecutionData[] = [];
 
 	const message = this.getNodeParameter('timelineMessage', i) as string;
+	if(!message) {
+		return null;
+	}
 
 	const me = await getMe(this);
 	console.info('Creating timeline post for user:', me.id);
@@ -20,7 +23,7 @@ async function sendTimelinePost(this: IExecuteFunctions, i: number): Promise<INo
 	return returnData;
 }
 export class SendTimelinePost extends HaiiloFunction {
-	getFunction(): NodeFunction {
+	getFunction(): TransformFunction {
 		return sendTimelinePost;
 	}
 	getName(): string {

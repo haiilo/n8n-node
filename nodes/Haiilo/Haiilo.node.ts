@@ -7,10 +7,11 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 import { HaiiloNodeRepository } from '../HaiiloApi/HaiiloNodeRepository';
-import { Notification } from './resources/notification/notification';
-import { Chat } from './resources/chat/chat';
-import { Timeline } from './resources/timeline/timeline';
-import { User } from './resources/user/user';
+import { Notification } from './resources/transform/notification/notification';
+import { Chat } from './resources/transform/chat/chat';
+import { Timeline } from './resources/transform/timeline/timeline';
+import { User } from './resources/transform/user/user';
+import { Search } from './resources/transform/search/search';
 
 interface IExtendedNodeTypeDescription extends INodeTypeDescription {
 	codex?: {
@@ -24,10 +25,12 @@ interface IExtendedNodeTypeDescription extends INodeTypeDescription {
 
 export class Haiilo implements INodeType {
 	repo = new HaiiloNodeRepository(
+		'transform',
 		new Chat(),
 		new Notification(),
 		new Timeline(),
-		new User()
+		new User(),
+		new Search()
 	);
 	description: IExtendedNodeTypeDescription = {
 		displayName: 'Haiilo',
@@ -71,11 +74,11 @@ export class Haiilo implements INodeType {
 
 	// Adds the usableAsTool property dynamically
 	constructor() {
-		const repo = HaiiloNodeRepository.instance;
+		const repo = HaiiloNodeRepository.getInstance('transform');
 		this.description.usableAsTool = true;
 		this.description.displayName = 'Haiilo';
 		this.description.codex = {
-			categories: ['Haiilo'],
+			categories: ['haiilo'],
 			subcategories: {
 				'Haiilo': repo.getCategoryNames()
 			},
@@ -103,11 +106,13 @@ export class Haiilo implements INodeType {
 			// Execution based on selected resource and operation
 			for (let i = 0; i < length; i++) {
 				try {
-					const repo = HaiiloNodeRepository.instance;
+					const repo = HaiiloNodeRepository.getInstance('transform');
 					const func = repo.getNodeFunction(resource, operation);
 					if (func) {
 						const results = await func.call(this, i);
-						returnData.push(...results);
+						if(results !== null) {
+							returnData.push(...results);
+						}
 					} else {
 						throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not supported for resource "${resource}"!`);
 					}

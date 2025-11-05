@@ -1,5 +1,5 @@
 
-import { HaiiloCategory, HaiiloFunction } from '../../../HaiiloApi/HaiiloNodeRepository';
+import { HaiiloCategory, HaiiloFunction } from '../../../../HaiiloApi/HaiiloNodeRepository';
 import { FindUser } from './findUser';
 
 export class User extends HaiiloCategory {
